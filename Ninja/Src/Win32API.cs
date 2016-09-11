@@ -23,6 +23,9 @@ namespace Ninja {
 		[DllImport("user32.dll")]
 		public static extern int SendMessage( IntPtr hWnd, uint msg, uint wp, uint lp );
 
+		/// <summary>
+		/// ウィンドウが存在しているかチェックする
+		/// </summary>
 		[DllImport("user32.dll")]
 		public static extern bool IsWindow( IntPtr hWnd );
 
