@@ -5,9 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Ninja"
         mc:Ignorable="d"
-        Title="Ninja" Height="350" Width="525">
+        Title="Ninja" Height="350" Width="525" Loaded="NinjaMainWindow_Loaded">
     <Grid>
-        <TextBox x:Name="ExecLog" Margin="10,24,10,10" TextWrapping="Wrap" Text="TextBox" FontFamily="Consolas" IsReadOnly="True" Background="Black" Foreground="Lime"/>
+        <TextBox x:Name="ExecLog" Margin="10,24,10,10" TextWrapping="Wrap" Text="" FontFamily="Consolas" IsReadOnly="True" Background="Black" Foreground="Lime"/>
 
     </Grid>
 </Window>

@@ -21,17 +21,34 @@ namespace Ninja {
 	/// MainWindow.xaml の相互作用ロジック
 	/// </summary>
 	public partial class MainWindow : Window {
-		public MainWindow() {
 
+		/// <summary>
+		/// ctor
+		/// </summary>
+		public MainWindow() {
 			InitializeComponent();
 
-			DispatcherTimer	Dt;
-			WatchDogs		wd	= new WatchDogs();
+			hWnd	= IntPtr.Zero;
+		}
 
-			Dt			= new DispatcherTimer( DispatcherPriority.Normal );
-			Dt.Interval	= new TimeSpan( 0, 0, 1 );
-			Dt.Tick		+= new EventHandler( Poling );
-			Dt.Start();
+		/// <summary>
+		/// ロードされた
+		/// </summary>
+		private void NinjaMainWindow_Loaded( object sender, RoutedEventArgs e ) {
+
+			DispatcherTimer	Dt;
+
+			try {
+
+				Dt			= new DispatcherTimer( DispatcherPriority.Normal );
+				Dt.Interval	= new TimeSpan( 0, 0, 1 );
+				Dt.Tick		+= new EventHandler( Poling );
+
+				Dt.Start();
+
+			} catch( Exception Exp ) {
+				Debug.WriteLine( Exp.ToString() );
+			}
 		}
 
 		/// <summary>
@@ -39,13 +56,31 @@ namespace Ninja {
 		/// </summary>
 		private void Poling( object sender, EventArgs e ) {
 
-			Process[] Procs = Process.GetProcessesByName( "Calculator" );
+			if( IntPtr.Zero == hWnd ) {
 
-			if( 0 < Procs.Count() ) {
-				ExecLog.AppendText( "電卓を見つけました\r\n" );
+				Process[] Procs = Process.GetProcessesByName( "notepad" );
+
+				if( 0 < Procs.Count() ) {
+
+					cWindowInfo	wi	= new cWindowInfo( Procs[ 0 ].MainWindowHandle );
+
+					hWnd	= wi.hWnd;
+
+					ExecLog.AppendText( "メモ帳を見つけました\r\n" );
+				}
+
 			} else {
-				ExecLog.AppendText( "電卓を見失いました\r\n" );
+
+				if( !Win32API.IsWindow( hWnd ) ) {
+					hWnd	= IntPtr.Zero;
+					ExecLog.AppendText( "メモ帳を見失いました\r\n" );
+				}
 			}
 		}
+
+		/// <summary>
+		/// 保持しているウィンドウハンドル
+		/// </summary>
+		IntPtr		hWnd;
 	}
 }

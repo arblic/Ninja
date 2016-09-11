@@ -54,7 +54,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Src\WatchDogs.cs" />
     <Compile Include="Src\Win32API.cs" />
     <Compile Include="Src\WindowInfo.cs" />
     <Page Include="MainWindow.xaml">
