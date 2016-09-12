@@ -7,7 +7,9 @@
         mc:Ignorable="d"
         Title="Ninja" Height="350" Width="525" Loaded="NinjaMainWindow_Loaded">
     <Grid>
-        <TextBox x:Name="ExecLog" Margin="10,24,10,10" TextWrapping="Wrap" Text="" FontFamily="Consolas" IsReadOnly="True" Background="Black" Foreground="Lime"/>
+        <ScrollViewer x:Name="ExecLogScroll" Margin="10,60,10,10" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+            <TextBox x:Name="ExecLog" Text="" FontFamily="Consolas" IsReadOnly="True" Background="Black" Foreground="Lime" AcceptsTab="True"/>
+        </ScrollViewer>
 
     </Grid>
 </Window>

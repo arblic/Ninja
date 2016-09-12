@@ -28,6 +28,7 @@ namespace Ninja {
 		public MainWindow() {
 			InitializeComponent();
 
+			ExecLogScroll.ScrollToBottom();
 			hWnd	= IntPtr.Zero;
 		}
 
@@ -58,7 +59,8 @@ namespace Ninja {
 
 			if( IntPtr.Zero == hWnd ) {
 
-				Process[] Procs = Process.GetProcessesByName( "notepad" );
+				//Process[] Procs = Process.GetProcessesByName( "notepad" );
+				Process[] Procs = Process.GetProcessesByName( "Calculator" );
 
 				if( 0 < Procs.Count() ) {
 
@@ -66,17 +68,40 @@ namespace Ninja {
 
 					hWnd	= wi.hWnd;
 
-					ExecLog.AppendText( "メモ帳を見つけました\r\n" );
+					//Log( "メモ帳を見つけました" );
+
+					TestOutput( "", wi );
 				}
 
 			} else {
 
 				if( !Win32API.IsWindow( hWnd ) ) {
 					hWnd	= IntPtr.Zero;
-					ExecLog.AppendText( "メモ帳を見失いました\r\n" );
+					//Log( "メモ帳を見失いました" );
 				}
 			}
 		}
+
+		private void TestOutput( string Space, cWindowInfo Wi ) {
+			Log( Space + Wi.ClassName );
+			foreach( cWindowInfo wi in Wi.Children ) {
+				TestOutput( Space + "　", wi );
+			}
+		}
+
+		/// <summary>
+		/// ログ出力
+		/// </summary>
+		public void Log( string Text ) {
+
+			DateTime	Dt	= DateTime.Now;
+
+			ExecLog.AppendText( Dt.ToLocalTime() + ">" + Text + "\r\n" );
+
+			ExecLogScroll.ScrollToBottom();
+		}
+
+
 
 		/// <summary>
 		/// 保持しているウィンドウハンドル
